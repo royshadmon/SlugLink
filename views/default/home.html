@@ -1,0 +1,169 @@
+{{extend 'layout.html'}}
+
+{{block head}}
+<script src="{{=URL('static', 'js/vue.js')}}"></script>
+<script>
+    var get_posts_url = "{{=URL('api', 'get_posts', user_signature=True)}}";
+    var add_post_url = "{{=URL('api', 'add_post', user_signature=True)}}";
+    var del_post_url = "{{=URL('api', 'del_post', user_signature=True)}}";
+    var edit_post_url = "{{=URL('api', 'edit_post', user_signature=True)}}";
+    var add_comment_url = "{{=URL('api', 'add_comment', user_signature=True)}}";
+    var del_comment_url = "{{=URL('api', 'del_comment', user_signature=True)}}";
+
+</script>
+{{end}}
+
+{{block buttons}}
+<div id="button-vue-div">
+    &nbsp;&nbsp;&nbsp;
+     <!-- Not logged in but can still see different posts in each section -->
+         <button class="btn btn-danger btn-sm" v-on:click="show_activites()">
+            Activities
+         </button>
+         <button class="btn btn-danger btn-sm" v-on:click="show_education()">
+            Education
+         </button>
+         <button class="btn btn-danger btn-sm" v-on:click="show_buy_sell()">
+            Buy & Sell
+         </button>
+</div>
+{{end}}
+
+<div class="main_content">
+
+    <div id="vue-div" class="display:none">
+
+        <!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
+        {{if auth.user_id:}}
+        <div class="button_bar">
+            <button v-if="!is_adding_post" class="btn btn-danger btn-sm" v-on:click="add_post_button()" style="float: right;">
+            {{=icon_add}} Add new post
+            </button>
+            <button v-if="is_adding_post" class="btn btn-warning btn-sm" v-on:click="add_post_button()" style="float: right;">
+            {{=icon_cancel}} Cancel
+            </button>
+        </div>
+        {{pass}}
+        <br>
+        <br>
+        <div v-if="is_adding_post" id="add-new-post">
+            <br>
+            <form action="#" v-on:submit.prevent="add_post()" class="form-horizontal" enctype="multipart/form-data" method="post">
+                <div class="form-group" id="no_table_artist__row">
+                    <div>
+                        <textarea class="text form-control" cols="40" id="no_post_content" name="post_content" v-model="form_post_content" rows="10"></textarea>
+                        <br><input class="upload" name="file" type="file" @change="on_file_change">
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+                <div class="form-group" id="submit_record__row">
+                    <div>
+                        <input class="btn btn-primary post-button" id="add_post_submit" type="submit" value="Post" />
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="post text-left post-content" v-for="p in posts" >
+            <!-- Here goes the code to display an individual post. The code below is just a placeholder. -->
+            <h4>${p.name}</h4>
+            <p2>${p.timestamp_display}</p2>
+            <div v-if="p.has_file">
+            <br>
+            <img :src="p.file"/>
+            <br><br>
+            </div>
+            <div v-if="editing_post_idx != p._idx">
+
+                <p>${p.post_content}</p>
+                <img v-if="p.is_owner" src="../static/images/pencil.png" v-on:click="begin_edit_post(p._idx)">
+                <img v-if="p.is_owner" src="../static/images/delete.png" v-on:click="delete_post(p._idx)">
+                <br>
+
+                <br>
+                <div v-if="p.comments.length > 0">
+                Comments:
+                </div>
+
+                <div class="text-left" v-for="c in p.comments" >
+                    <p class="comments"><b>${c.name}</b> says at ${c.timestamp_display}<img v-if="p.is_owner" src="../static/images/delete.png" v-on:click="delete_comment(p._idx, c._idx)">
+                    <br>
+                    ${c.comment_content}</p>
+                </div>
+
+                <!-- trying to add comment -->
+                <!-- hide button when comment is being added -->
+                <button v-if="comment_post_idx != p._idx" style="float: right;" class="btn btn-danger btn-sm" v-on:click="begin_add_comment(p._idx)">
+                    {{=icon_add}} Add Comment
+                </button>
+                <br>
+            </div>
+            <div v-else>
+                <form action="#" v-on:submit.prevent="end_edit_post()" class="form-horizontal" enctype="multipart/form-data" method="post">
+                    <div class="form-group">
+                        <div>
+                            <textarea class="text form-control" cols="40" name="post_content" v-model="form_edit_post_content" rows="6"></textarea>
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <input class="btn btn-primary" class="post-edit-button" type="submit" value="Post" />
+                            <button class="btn btn-default" class="cancel-button" v-on:click="cancel_edit_post()">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- a comment is being added -->
+            <div v-if="comment_post_idx == p._idx">
+                <br>
+                <form action="#" v-on:submit.prevent="end_add_comment()" class="form-horizontal" enctype="multipart/form-data" method="post">
+                    <div class="form-group">
+                        <div>
+                            <textarea class="text form-control" cols="40" name="post_content" v-model="form_comment_content" rows="6"></textarea>
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group" id="submit_record__row">
+                        <div style="text-align: right;">
+                            <button class="btn btn-default" class="cancel-button" v-on:click="cancel_add_comment()">Cancel</button>
+                            <input class="btn btn-primary" class="post-edit-button" type="submit" value="Comment" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div v-if="has_more" class="show_more">
+            <button class="btn btn-default" id="load-more" v-on:click="get_more_posts()">Load more</button>
+         </div>
+        <br>
+    </div>
+
+</div>
+
+</div>
+
+<script src="{{=URL('static', 'js/default_index.js')}}"></script>
+<script>
+
+    var category = "{{=request.vars.category}}";
+
+    console.log(category);
+
+    if(category == "0") {
+        console.log("LOAD ACTIVITES");
+        APP.show_activities();
+    }
+    else if(category == "1") {
+        console.log("LOAD EDUCATION");
+        APP.show_education();
+    }
+    else if(category == "2") {
+        console.log("LOAD BUY SELL");
+        APP.show_buy_sell();
+    }
+    else {
+        APP.show_activities();
+    }
+</script>

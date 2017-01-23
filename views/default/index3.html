@@ -1,0 +1,39 @@
+
+
+<script>
+
+    (function() {
+  /**
+   * Video element
+   * @type {HTMLElement}
+   */
+  var video = document.getElementById("my-video");
+
+  /**
+   * Check if video can play, and play it
+   */
+  video.addEventListener( "canplay", function() {
+    video.play();
+  });
+})();
+
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="fullscreen-bg">
+    <video loop muted autoplay poster="img/videoframe.jpg" style="transforn:translateY(-100px);">
+        <source src="../static/images/Round-Table.webm" type="video/webm">
+        <source src="../static/images/Round-Table.mp4" type="video/mp4">
+        <source src="../static/images/Round-Table.ogv" type="video/ogg">
+    </video>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,219 @@
+(dp1
+S'output'
+p2
+S'Unable to open included view file: /mnt/c/Users/deen1/Desktop/CMPS 183/web2py/applications/sluglink/views/index.html'
+p3
+sS'layer'
+p4
+S"'layout.html'"
+p5
+sS'code'
+p6
+S'<!DOCTYPE html>\r\n{{extend \'index.html\'}}\r\n\r\n<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="{{=T.accepted_language or \'en\'}}"> <!--<![endif]-->\r\n  <head>\r\n    <meta charset="utf-8">\r\n    <!-- www.phpied.com/conditional-comments-block-downloads/ -->\r\n    <!-- Always force latest IE rendering engine\r\n         (even in intranet) & Chrome Frame\r\n         Remove this if you use the .htaccess -->\r\n    <meta http-equiv="X-UA-Compatible" content="IE=edge{{=not request.is_local and \',chrome=1\' or \'\'}}">\r\n    <!--  Mobile Viewport Fix\r\n          j.mp/mobileviewport & davidbcalhoun.com/2010/viewport-metatag\r\n          device-width: Occupy full width of the screen in its current orientation\r\n          initial-scale = 1.0 retains dimensions instead of zooming out if page height > device height\r\n          user-scalable = yes allows the user to zoom in -->\r\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\r\n    <title>{{=response.title or request.application}}</title>\r\n    <!-- http://dev.w3.org/html5/markup/meta.name.html -->\r\n    <meta name="application-name" content="{{=request.application}}">\r\n    <!-- Speaking of Google, don\'t forget to set your site up:\r\n         http://google.com/webmasters -->\r\n    <meta name="google-site-verification" content="">\r\n    <!-- include stylesheets -->\r\n    <link rel="stylesheet" href="{{=URL(\'static\',\'css/bootstrap.min.css\')}}"/>\r\n    <link rel="stylesheet" href="{{=URL(\'static\',\'css/web2py-bootstrap3.css\')}}"/>\r\n    <link rel="stylesheet" href="{{=URL(\'static\',\'css/myapp.css\')}}"/>\r\n    <link rel="stylesheet" href="{{=URL(\'static\', \'font-awesome-4.6.3/css/font-awesome.min.css\')}}"/>\r\n\r\n    <link rel="shortcut icon" href="{{=URL(\'static\',\'images/favicon.ico\')}}" type="image/x-icon">\r\n    <link rel="apple-touch-icon" href="{{=URL(\'static\',\'images/favicon.png\')}}">\r\n    <!-- All JavaScript at the bottom, except for Modernizr which enables\r\n         HTML5 elements & feature detects -->\r\n    <script src="{{=URL(\'static\',\'js/modernizr-2.8.3.min.js\')}}"></script>\r\n    <!--[if lt IE 9]>\r\n        <script src="{{=URL(\'static\',\'js/respond-1.4.2.min.js\')}}"></script>\r\n        <![endif]-->\r\n    <!-- Favicons -->\r\n    {{include \'web2py_ajax.html\'}} <!-- this includes jquery.js, calendar.js/.css and web2py.js -->\r\n    {{block head}}{{end}}\r\n    {{\r\n    # using sidebars need to know what sidebar you want to use\r\n    mc0 = \'col-md-12\'\r\n    mc1 = \'col-md-9\'\r\n    mc2 = \'col-md-6\'\r\n    left_sidebar_enabled = globals().get(\'left_sidebar_enabled\', False)\r\n    right_sidebar_enabled = globals().get(\'right_sidebar_enabled\', False)\r\n    middle_column = {0: mc0, 1: mc1, 2: mc2}[\r\n    (left_sidebar_enabled and 1 or 0)+(right_sidebar_enabled and 1 or 0)]\r\n    }}\r\n  </head>\r\n  <body>\r\n    <!--[if lt IE 8]><p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p><![endif]-->\r\n    <div class="w2p_flash alert alert-dismissable">{{=response.flash or \'\'}}</div>\r\n    <!-- Navbar ======================================= -->\r\n    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">\r\n      <div class="container-fluid">\r\n        <div class="navbar-header">\r\n          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">\r\n            <span class="sr-only">Toggle navigation</span>\r\n            <span class="icon-bar"></span>\r\n            <span class="icon-bar"></span>\r\n            <span class="icon-bar"></span>\r\n          </button>\r\n\r\n          <img src="{{=URL(\'static/images\',\'sluglink.png\')}}"/>\r\n\r\n        </div>\r\n        <div class="collapse navbar-collapse navbar-ex1-collapse">\r\n          <ul class="nav navbar-nav navbar-right">\r\n            {{=\'auth\' in globals() and auth.navbar(\'Welcome\',mode=\'dropdown\') or \'\'}}\r\n          </ul>\r\n          {{if response.menu:}}\r\n          <button class="btn btn-danger btn-sm" v-on:click="show_activites()" style="float: left;">\r\n            Activities\r\n         </button>\r\n         <button class="btn btn-danger btn-sm" v-on:click="show_education()" style="float: left;">\r\n            Education\r\n         </button>\r\n         <button class="btn btn-danger btn-sm" v-on:click="show_buy_sell()" style="float: left;">\r\n            Buy & Sell\r\n         </button>\r\n          {{pass}}\r\n        </div>\r\n      </div>\r\n    </nav>\r\n    <!-- Masthead ===================================== -->\r\n    {{block header}}\r\n    {{end}}\r\n    <!-- Main ========================================= -->\r\n    <!-- Begin page content -->\r\n    <div class="container-fluid main-container">\r\n      {{if left_sidebar_enabled:}}\r\n        <div class="col-md-3 left-sidebar">\r\n            {{block left_sidebar}}\r\n            <h3>Left Sidebar</h3>\r\n            <p></p>\r\n            {{end}}\r\n        </div>\r\n      {{pass}}\r\n\r\n      <div class="{{=middle_column}}">\r\n        {{block center}}\r\n        {{include}}\r\n        {{end}}\r\n      </div>\r\n\r\n      {{if right_sidebar_enabled:}}\r\n        <div class="col-md-3">\r\n            {{block right_sidebar}}\r\n            <h3>Right Sidebar</h3>\r\n            <p></p>\r\n            {{end}}\r\n        </div>\r\n      {{pass}}\r\n\r\n    </div>\r\n\r\n    {{block footer}} <!-- this is default footer -->\r\n    <footer class="footer">\r\n      <div class="container-fluid">\r\n        <div class="copyright pull-left">{{=T(\'Copyright\')}} &#169; {{=request.now.year}}</div>\r\n          <div id="poweredBy" class="pull-right">\r\n            {{=T(\'Powered by\')}}\r\n            <a href="http://www.web2py.com/">Adam Fischer</a>\r\n          </div>\r\n      </div>\r\n    </footer>\r\n    {{end}}\r\n    <!-- The javascript =============================== -->\r\n    <script src="{{=URL(\'static\',\'js/bootstrap.min.js\')}}"></script>\r\n    <script src="{{=URL(\'static\',\'js/web2py-bootstrap3.js\')}}"></script>\r\n    {{block page_js}}{{end page_js}}\r\n    {{if response.google_analytics_id:}}\r\n    <!-- Analytics ==================================== -->\r\n    <script src="{{=URL(\'static\',\'js/analytics.min.js\')}}"></script>\r\n    <script type="text/javascript">\r\n      analytics.initialize({\r\n      \'Google Analytics\':{trackingId:\'{{=response.google_analytics_id}}\'}\r\n      });\r\n    </script>\r\n    {{pass}}\r\n    <!-- Share ============================y============ -->\r\n    <script src="{{=URL(\'static\',\'js/share.js\',vars=dict(static=URL(\'static\',\'images\')))}}"></script>\r\n  </body>\r\n</html>\r\n'
+p7
+sS'snapshot'
+p8
+(dp9
+S'exception'
+p10
+(dp11
+S'__getslice__'
+p12
+S"<method-wrapper '__getslice__' of exceptions.IOError object>"
+p13
+sS'__str__'
+p14
+S"<method-wrapper '__str__' of exceptions.IOError object>"
+p15
+sS'__reduce__'
+p16
+S'<built-in method __reduce__ of exceptions.IOError object>'
+p17
+sS'__dict__'
+p18
+S'{}'
+p19
+sS'__sizeof__'
+p20
+S'<built-in method __sizeof__ of exceptions.IOError object>'
+p21
+sS'__init__'
+p22
+S"<method-wrapper '__init__' of exceptions.IOError object>"
+p23
+sS'__setattr__'
+p24
+S"<method-wrapper '__setattr__' of exceptions.IOError object>"
+p25
+sS'__reduce_ex__'
+p26
+S'<built-in method __reduce_ex__ of exceptions.IOError object>'
+p27
+sS'__new__'
+p28
+S'<built-in method __new__ of type object>'
+p29
+sS'errno'
+p30
+S'2'
+sS'__format__'
+p31
+S'<built-in method __format__ of exceptions.IOError object>'
+p32
+sS'__class__'
+p33
+S"<type 'exceptions.IOError'>"
+p34
+sS'filename'
+p35
+S"'/mnt/c/Users/deen1/Desktop/CMPS 183/web2py/applications/sluglink/views/index.html'"
+p36
+sS'__doc__'
+p37
+S"'I/O operation failed.'"
+p38
+sS'__getitem__'
+p39
+S"<method-wrapper '__getitem__' of exceptions.IOError object>"
+p40
+sS'__setstate__'
+p41
+S'<built-in method __setstate__ of exceptions.IOError object>'
+p42
+sS'__getattribute__'
+p43
+S"<method-wrapper '__getattribute__' of exceptions.IOError object>"
+p44
+sS'args'
+p45
+S"(2, 'No such file or directory')"
+p46
+sS'__subclasshook__'
+p47
+S'<built-in method __subclasshook__ of type object>'
+p48
+sS'__unicode__'
+p49
+S'<built-in method __unicode__ of exceptions.IOError object>'
+p50
+sS'strerror'
+p51
+S"'No such file or directory'"
+p52
+sS'__delattr__'
+p53
+S"<method-wrapper '__delattr__' of exceptions.IOError object>"
+p54
+sS'__repr__'
+p55
+S"<method-wrapper '__repr__' of exceptions.IOError object>"
+p56
+sS'__hash__'
+p57
+S"<method-wrapper '__hash__' of exceptions.IOError object>"
+p58
+ssS'evalue'
+p59
+S"[Errno 2] No such file or directory: '/mnt/c/Users/deen1/Desktop/CMPS 183/web2py/applications/sluglink/views/index.html'"
+p60
+sS'frames'
+p61
+(lp62
+(dp63
+S'file'
+p64
+S'/mnt/c/Users/deen1/Desktop/CMPS 183/web2py/gluon/template.py'
+p65
+sS'dump'
+p66
+(dp67
+S'builtinopen'
+p68
+S'<built-in function open>'
+p69
+sS'fileobj'
+p70
+S'undefined'
+p71
+sS'filepath'
+p72
+S"'/mnt/c/Users/deen1/Desktop/CMPS 183/web2py/applications/sluglink/views/index.html'"
+p73
+ssS'lnum'
+p74
+I450
+sS'lines'
+p75
+(dp76
+I448
+S'        # try to read the text.'
+p77
+sI449
+S'        try:'
+p78
+sI450
+S"            fileobj = open(filepath, 'rb')"
+p79
+sI451
+S'            text = fileobj.read()'
+p80
+sI452
+S'            fileobj.close()'
+p81
+sI453
+S'        except IOError:'
+p82
+sI454
+S"            self._raise_error('Unable to open included view file: ' + filepath)"
+p83
+sI445
+S'        # Get the path of the file on the system.'
+p84
+sI446
+S'        filepath = self.path and os.path.join(self.path, filename) or filename'
+p85
+sI447
+S''
+ssS'call'
+p86
+S"(self=<gluon.template.TemplateParser object>, filename='index.html')"
+p87
+sS'func'
+p88
+S'_get_file_text'
+p89
+sasS'pyver'
+p90
+S'Python 2.7.6: /usr/bin/python (prefix: /usr)'
+p91
+sS'etype'
+p92
+S"<type 'exceptions.IOError'>"
+p93
+sS'date'
+p94
+S'Fri Dec  2 23:46:15 2016'
+p95
+sS'locals'
+p96
+(dp97
+S'self'
+p98
+S'<gluon.template.TemplateParser object>'
+p99
+sS'filepath'
+p100
+S"'/mnt/c/Users/deen1/Desktop/CMPS 183/web2py/applications/sluglink/views/index.html'"
+p101
+sS'context'
+p102
+S"{'A': <class 'gluon.html.A'>, 'ANY_OF': <class 'gluon.validators.ANY_OF'>, 'ASSIGNJS': <function ASSIGNJS>, 'AppConfig': <function AppConfig>, 'Auth': <class 'gluon.tools.Auth'>, 'B': <class 'gluon.html.B'>, 'BEAUTIFY': <class 'gluon.html.BEAUTIFY'>, 'BODY': <class 'gluon.html.BODY'>, 'BR': <class 'gluon.html.BR'>, 'BUTTON': <class 'gluon.html.BUTTON'>, ...}"
+p103
+sg35
+S"'index.html'"
+p104
+sssS'traceback'
+p105
+S'Traceback (most recent call last):\n  File "/mnt/c/Users/deen1/Desktop/CMPS 183/web2py/gluon/template.py", line 450, in _get_file_text\n    fileobj = open(filepath, \'rb\')\nIOError: [Errno 2] No such file or directory: \'/mnt/c/Users/deen1/Desktop/CMPS 183/web2py/applications/sluglink/views/index.html\'\n'
+p106
+s.

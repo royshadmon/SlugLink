@@ -1,0 +1,43 @@
+{{extend 'layout.html'}}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<body>
+
+<div id="wrapper">
+
+        <img style="position:relative; top:-10%; left:30%;" src="../static/images/sluglinkBig.png" width=612px height="250px"  />
+
+<div>
+    <div class="display:none" style="margin-left: 10%; margin-top:5%;">
+         <button onclick="window.location.href='/sluglink/default/home?category=0'" class="startButton3">
+            Activities
+         </button>
+    </div>
+    <div class="display:none" style="margin-left: 40%">
+         <button onclick="window.location.href='/sluglink/default/home?category=1'" class="startButton2">
+            Education
+         </button>
+     </div>
+    <div class="display:none" style="margin-left: 70%">
+         <button onclick="window.location.href='/sluglink/default/home?category=2'" class="startButton">
+            Buy & Sell
+         </button>
+    </div>
+</div>
+
+
+
+<!-- source for video background http://slicejack.com/fullscreen-html5-video-background-css/ -->
+<div class="fullscreen-bg" style="position:fixed; margin-bottom: 0%";>
+    <video loop muted autoplay poster="img/videoframe.jpg" class="fullscreen-bg__video">
+        <source src="../static/images/Busy-Forest.webm" type="video/webm">
+        <source src="../static/images/Busy-Forest.mp4" type="video/mp4">
+        <source src="../static/images/Busy-Forest.ogv" type="video/ogg">
+    </video>
+
+</div>
+</div>
+</body>
+</html>
